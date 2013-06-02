@@ -1,6 +1,6 @@
 {
     "name": "trismegiste/smant",
-    "description": "Scary Mutants and Nice Tests is tool to test tests with mutants",
+    "description": "Scary Mutants and Nice Tests is tool to test PhpUnit tests with on-the-fly-produced mutants",
     "type": "CLI",
     "keywords": ["mutant", "phpunit", "test"],
     "authors": [

@@ -16,21 +16,41 @@ class Command extends \PHPUnit_TextUI_Command
 
     public static $classMap = array();
     public static $callLink = array();
+    protected static $parser = null;
+    protected static $printer = null;
 
     public function __construct($caughtClasses)
     {
         static::$classMap = $caughtClasses;
     }
 
+    public static function getParser()
+    {
+        if (is_null(static::$parser)) {
+            static::$parser = new \PHPParser_Parser(new \PHPParser_Lexer());
+        }
+
+        return static::$parser;
+    }
+
+    public static function getPrinter()
+    {
+        if (is_null(static::$printer)) {
+            static::$printer = new \PHPParser_PrettyPrinter_Default();
+        }
+        return static::$printer;
+    }
+
     public static function transformAndEval($class, $filename)
     {
-        $parser = new \PHPParser_Parser(new \PHPParser_Lexer());
+        $parser = static::getParser();
         $stmt = $parser->parse(file_get_contents($filename));
+
         $traver = new \PHPParser_NodeTraverser();
         $traver->addVisitor(new MadScientist($filename));
         $changed = $traver->traverse($stmt);
-        $pp = new \PHPParser_PrettyPrinter_Default();
-        $newContent = $pp->prettyPrint($changed);
+
+        $newContent = static::getPrinter()->prettyPrint($changed);
 //        echo $newContent;
         eval($newContent);
     }
