@@ -1,0 +1,27 @@
+{
+    "name": "trismegiste/smant",
+    "description": "Scary Mutants and Nice Tests is tool to test tests with mutants",
+    "type": "CLI",
+    "keywords": ["mutant", "phpunit", "test"],
+    "authors": [
+    {
+        "name": "Trismegiste",
+        "email": "florent.g@allopneus.com"
+    }
+    ],
+    "require": {
+        "php": ">=5.3.8",
+        "nikic/php-parser": "dev-master",
+        "symfony/console": "2.2.*",
+        "symfony/finder": "2.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Trismegiste\\Smant\\": ""
+        }
+    },
+    "target-dir": "Trismegiste/Smant",
+    "license": "CC-BY-SA-3.0",
+    "version": "0.1"
+
+}
