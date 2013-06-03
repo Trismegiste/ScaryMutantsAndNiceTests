@@ -69,7 +69,7 @@ class Mutate extends Command
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
         $cmd = new PhpUnit\Command($classMap);
-        $cmd->run(array('-c', $packageDir), false);
+        $ret = $cmd->run(array('-c', $packageDir), false);
     }
 
 }

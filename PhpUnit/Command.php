@@ -41,10 +41,15 @@ class Command extends \PHPUnit_TextUI_Command
         return static::$printer;
     }
 
+    /**
+     * Do the autoloading (with on-the-fly mutation by the MadScientist visitor)
+     *
+     * @param string $class the FQCN of the class
+     * @param string $filename the path to the file
+     */
     public static function transformAndEval($class, $filename)
     {
-        $parser = static::getParser();
-        $stmt = $parser->parse(file_get_contents($filename));
+        $stmt = static::getParser()->parse(file_get_contents($filename));
 
         $traver = new \PHPParser_NodeTraverser();
         $traver->addVisitor(new MadScientist($filename));
@@ -68,7 +73,7 @@ class Command extends \PHPUnit_TextUI_Command
 
     /**
      * My own runner to tune the configuration
-     * 
+     *
      * @return \Trismegiste\Smant\PhpUnit\Runner
      */
     protected function createRunner()

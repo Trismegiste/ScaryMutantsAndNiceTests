@@ -26,6 +26,8 @@ class Runner extends \PHPUnit_TextUI_TestRunner
                 unset($arguments[$key]);
             }
         }
+        // adding listeners
+        //$arguments['listeners'][] =
     }
 
 }
