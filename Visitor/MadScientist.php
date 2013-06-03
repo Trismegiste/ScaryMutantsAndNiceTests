@@ -39,6 +39,17 @@ class MadScientist extends \PHPParser_NodeVisitorAbstract
                     return $node;
                 }
                 break;
+
+            // add +/- 1 to integer
+            case 'Scalar_LNumber':
+                $node->value += 2 * rand(0, 1) - 1;
+                return $node;
+                break;
+
+            // add +/- 10% to double
+            case 'Scalar_DNumber':
+                $node->value *= (9 + 2 * rand(0, 1)) / 10.0;
+                break;
         }
     }
 
