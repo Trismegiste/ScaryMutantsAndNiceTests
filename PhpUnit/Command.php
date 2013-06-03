@@ -66,10 +66,14 @@ class Command extends \PHPUnit_TextUI_Command
         parent::handleBootstrap($filename);
     }
 
-//    protected function handleArguments(array $argv)
-//    {
-//        parent::handleArguments($argv);
-//        print_r($this->options);
-//    }
+    /**
+     * My own runner to tune the configuration
+     * 
+     * @return \Trismegiste\Smant\PhpUnit\Runner
+     */
+    protected function createRunner()
+    {
+        return new Runner($this->arguments['loader']);
+    }
 
 }
