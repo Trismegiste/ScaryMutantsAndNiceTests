@@ -3,7 +3,6 @@
 namespace Trismegiste\Smant;
 
 require_once 'vendor/autoload.php';
-require_once 'PHPUnit/Autoload.php';
 
 use Symfony\Component\Console\Application;
 use Trismegiste\Smant\Command;

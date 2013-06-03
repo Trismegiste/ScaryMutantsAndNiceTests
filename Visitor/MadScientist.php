@@ -31,10 +31,12 @@ class MadScientist extends \PHPParser_NodeVisitorAbstract
                 return new \PHPParser_Node_Scalar_String(dirname($this->filename));
                 break;
 
-            // mutation true => false
+            // mutation true |---> false and false |---> true
             case 'Expr_ConstFetch':
-                if ($node->name == 'true') {
-                    return new \PHPParser_Node_Expr_ConstFetch(new \PHPParser_Node_Name('false'));
+                $choice = array(-1 => 'false', 1 => 'true');
+                if (false !== $key = array_search((string) $node->name, $choice)) {
+                    $node->name = new \PHPParser_Node_Name($choice[-$key]);
+                    return $node;
                 }
                 break;
         }

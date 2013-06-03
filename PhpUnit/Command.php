@@ -66,4 +66,10 @@ class Command extends \PHPUnit_TextUI_Command
         parent::handleBootstrap($filename);
     }
 
+//    protected function handleArguments(array $argv)
+//    {
+//        parent::handleArguments($argv);
+//        print_r($this->options);
+//    }
+
 }

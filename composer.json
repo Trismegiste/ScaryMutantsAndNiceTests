@@ -13,7 +13,8 @@
         "php": ">=5.3.8",
         "nikic/php-parser": "dev-master",
         "symfony/console": "2.2.*",
-        "symfony/finder": "2.2.*"
+        "symfony/finder": "2.2.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
