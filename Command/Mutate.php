@@ -66,10 +66,13 @@ class Mutate extends Command
             }
         }
 
+        $report=  new PhpUnit\NullPrinter();
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
-        $cmd = new PhpUnit\Command($classMap);
+        $cmd = new PhpUnit\Command($classMap, $report);
         $ret = $cmd->run(array('-c', $packageDir), false);
+
+        print_r(array_keys($report->getReport()));
     }
 
 }

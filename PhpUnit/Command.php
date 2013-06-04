@@ -18,10 +18,12 @@ class Command extends \PHPUnit_TextUI_Command
     public static $callLink = array();
     protected static $parser = null;
     protected static $printer = null;
+    protected $report;
 
-    public function __construct($caughtClasses)
+    public function __construct($caughtClasses, IncompleteFailure $report)
     {
         static::$classMap = $caughtClasses;
+        $this->report = $report;
     }
 
     public static function getParser()
@@ -78,7 +80,7 @@ class Command extends \PHPUnit_TextUI_Command
      */
     protected function createRunner()
     {
-        return new Runner($this->arguments['loader']);
+        return new Runner($this->arguments['loader'], $this->report);
     }
 
 }

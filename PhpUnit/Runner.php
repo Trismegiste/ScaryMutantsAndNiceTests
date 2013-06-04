@@ -13,6 +13,14 @@ namespace Trismegiste\Smant\PhpUnit;
 class Runner extends \PHPUnit_TextUI_TestRunner
 {
 
+    protected $report;
+
+    public function __construct(\PHPUnit_Runner_TestSuiteLoader $loader = NULL, IncompleteFailure $report)
+    {
+        parent::__construct($loader);
+        $this->report = $report;
+    }
+
     /**
      * Remove any coverage options
      *
@@ -27,7 +35,7 @@ class Runner extends \PHPUnit_TextUI_TestRunner
             }
         }
         // printer
-        $arguments['printer'] = new NullPrinter();
+        $arguments['printer'] = $this->report;
     }
 
 }
