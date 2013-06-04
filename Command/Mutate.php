@@ -22,6 +22,7 @@ class Mutate extends Command
 {
 
     protected $phpfinder;
+    protected $dryRun = false;
 
     protected function configure()
     {
@@ -29,7 +30,8 @@ class Mutate extends Command
                 ->setDescription('Launches tests with mutants')
                 ->addArgument('dir', InputArgument::REQUIRED, 'The directory to explore')
                 ->addOption('ignore', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Directories to ignore', array('Tests', 'vendor'))
-                ->addOption('random', null, InputOption::VALUE_REQUIRED, 'The random seed to reproduce same conditions');
+                ->addOption('random', null, InputOption::VALUE_REQUIRED, 'The random seed to reproduce same conditions')
+                ->addOption('dry', null, InputOption::VALUE_NONE, "Runs the tests without mutation : check if this tool doesn't break anything");
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -40,6 +42,7 @@ class Mutate extends Command
         if ($input->hasOption('random')) {
             srand((int) $input->getOption('random'));
         }
+        $this->dryRun = (bool) $input->getOption('dry');
     }
 
     protected function getPhpFinder($directory, $ignoreDir)
@@ -73,7 +76,7 @@ class Mutate extends Command
         $report = new PhpUnit\NullPrinter();
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
-        $cmd = new PhpUnit\Command($classMap, $report);
+        $cmd = new PhpUnit\Command($classMap, $report, $this->dryRun);
         $ret = $cmd->run(array('-c', $packageDir), false);
 
         foreach(array_keys($report->getReport()) as $className) {

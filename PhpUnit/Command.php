@@ -18,11 +18,13 @@ class Command extends \PHPUnit_TextUI_Command
     public static $callLink = array();
     protected static $parser = null;
     protected static $printer = null;
+    protected static $dryRun;
     protected $report;
 
-    public function __construct($caughtClasses, IncompleteFailure $report)
+    public function __construct($caughtClasses, IncompleteFailure $report, $dryRun)
     {
         static::$classMap = $caughtClasses;
+        static::$dryRun = $dryRun;
         $this->report = $report;
     }
 
@@ -54,7 +56,7 @@ class Command extends \PHPUnit_TextUI_Command
         $stmt = static::getParser()->parse(file_get_contents($filename));
 
         $traver = new \PHPParser_NodeTraverser();
-        $traver->addVisitor(new MadScientist($filename));
+        $traver->addVisitor(new MadScientist($filename, static::$dryRun));
         $changed = $traver->traverse($stmt);
 
         $newContent = static::getPrinter()->prettyPrint($changed);
