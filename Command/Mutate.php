@@ -76,7 +76,9 @@ class Mutate extends Command
         $cmd = new PhpUnit\Command($classMap, $report);
         $ret = $cmd->run(array('-c', $packageDir), false);
 
-        print_r(array_keys($report->getReport()));
+        foreach(array_keys($report->getReport()) as $className) {
+            $output->writeln("Test case <info>$className</info> is not a complete failure");
+        }
     }
 
 }
