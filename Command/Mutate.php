@@ -28,7 +28,8 @@ class Mutate extends Command
         $this->setName('mutate')
                 ->setDescription('Launches tests with mutants')
                 ->addArgument('dir', InputArgument::REQUIRED, 'The directory to explore')
-                ->addOption('ignore', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Directories to ignore', array('Tests', 'vendor'));
+                ->addOption('ignore', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Directories to ignore', array('Tests', 'vendor'))
+                ->addOption('random', null, InputOption::VALUE_REQUIRED, 'The random seed to reproduce same conditions');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -36,6 +37,9 @@ class Mutate extends Command
         $directory = $input->getArgument('dir');
         $ignoreDir = $input->getOption('ignore');
         $this->phpfinder = $this->getPhpFinder($directory, $ignoreDir);
+        if ($input->hasOption('random')) {
+            srand((int) $input->getOption('random'));
+        }
     }
 
     protected function getPhpFinder($directory, $ignoreDir)
@@ -66,7 +70,7 @@ class Mutate extends Command
             }
         }
 
-        $report=  new PhpUnit\NullPrinter();
+        $report = new PhpUnit\NullPrinter();
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
         $cmd = new PhpUnit\Command($classMap, $report);
