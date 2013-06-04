@@ -14,8 +14,8 @@ class MadScientist extends PetriDish
 
     protected function mutateNode(\PHPParser_Node $node)
     {
-
         switch ($node->getType()) {
+
             // mutation true |---> false and false |---> true
             case 'Expr_ConstFetch':
                 $choice = array(-1 => 'false', 1 => 'true');
@@ -34,6 +34,7 @@ class MadScientist extends PetriDish
             // add +/- 10% to double
             case 'Scalar_DNumber':
                 $node->value *= (9 + 2 * rand(0, 1)) / 10.0;
+                return $node;
                 break;
         }
     }
