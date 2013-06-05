@@ -73,15 +73,11 @@ class Mutate extends Command
             }
         }
 
-        $report = new PhpUnit\NullPrinter();
+        $report = new PhpUnit\InverseResult();
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
         $cmd = new PhpUnit\Command($classMap, $report, $this->dryRun);
         $ret = $cmd->run(array('-c', $packageDir), false);
-
-        foreach(array_keys($report->getReport()) as $className) {
-            $output->writeln("Test case <info>$className</info> is not a complete failure");
-        }
     }
 
 }

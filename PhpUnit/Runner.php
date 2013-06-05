@@ -15,7 +15,7 @@ class Runner extends \PHPUnit_TextUI_TestRunner
 
     protected $report;
 
-    public function __construct(\PHPUnit_Runner_TestSuiteLoader $loader = NULL, IncompleteFailure $report = NULL)
+    public function __construct(\PHPUnit_Runner_TestSuiteLoader $loader = NULL, \PHPUnit_TextUI_ResultPrinter $report = NULL)
     {
         parent::__construct($loader);
         $this->report = $report;
@@ -34,6 +34,8 @@ class Runner extends \PHPUnit_TextUI_TestRunner
                 unset($arguments[$key]);
             }
         }
+        unset($arguments['reportDirectory']);
+
         // printer
         $arguments['printer'] = $this->report;
     }

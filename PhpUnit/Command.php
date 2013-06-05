@@ -21,7 +21,7 @@ class Command extends \PHPUnit_TextUI_Command
     protected static $dryRun;
     protected $report;
 
-    public function __construct($caughtClasses, IncompleteFailure $report, $dryRun)
+    public function __construct($caughtClasses, \PHPUnit_TextUI_ResultPrinter $report, $dryRun)
     {
         static::$classMap = $caughtClasses;
         static::$dryRun = $dryRun;
