@@ -73,11 +73,13 @@ class Mutate extends Command
             }
         }
 
-        $report = new PhpUnit\InverseResult();
+
+        $report = $this->dryRun ? new \PHPUnit_TextUI_ResultPrinter() : new PhpUnit\InverseResult();
+
         $packageDir = $input->getArgument('dir');
         chdir($packageDir);
         $cmd = new PhpUnit\Command($classMap, $report, $this->dryRun);
-        $ret = $cmd->run(array('-c', $packageDir), false);
+        $cmd->run(array('-c', $packageDir), false);
     }
 
 }
